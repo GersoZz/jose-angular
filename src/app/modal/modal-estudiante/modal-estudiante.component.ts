@@ -1,4 +1,4 @@
-import { Component,EventEmitter, Input, Output } from '@angular/core';
+import { Component,EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { EstudianteCreate } from '../../business/models/estudiante-crear';
 import { Estudiante } from '../../business/models/estudiante';
 import { ApiEstudianteService } from '../../shared/services/api-estudiante/api-estudiante.service';
@@ -24,6 +24,16 @@ export class ModalEstudianteComponent {
   close() {
     this.isVisible = false;
     this.closeModal.emit(false)
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    console.log("🚀")
+    const targetElement = event.target as HTMLElement
+
+    if (!targetElement.closest('#modal-estudiante') && this.isVisible) {
+      this.close()
+    }
   }
 
   confirmAction() {
