@@ -1,17 +1,20 @@
-
-<app-modal-estudiante> </app-modal-estudiante>
-
+<app-modal-estudiante
+  [isVisible]="isModalVisible"
+  [actionType]="actionType"
+  [item]="currentItem"
+  (closeModal)="closeModal($event)"
+></app-modal-estudiante>
 <!-- component -->
 <div class="flex items-center justify-between p-4">
-    <h2>
+  <h2>
     <span class="text-4xl font-bold text-gray-900 uppercase">Estudiantes</span>
-    </h2>
+  </h2>
 </div>
 <div class="flex items-end justify-end p-4">
   <button
     class="middle none center mr-4 rounded-lg bg-green-500 py-3 px-6 font-sans text-xs font-bold uppercase text-white shadow-md shadow-green-500/20 transition-all hover:shadow-lg hover:shadow-green-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
     data-ripple-light="true"
-    (click)="openModal('Agregar')"
+    (click)="openModal('Añadir')"
   >
     Añadir Estudiante
   </button>
@@ -31,7 +34,7 @@
     <tbody class="divide-y divide-gray-100 border-t border-gray-100">
       <tr class="hover:bg-gray-50">
         <td class=" gap-3 px-6 py-4 font-normal text-gray-900">
-            <div class="text-gray-700">Steven Jobs</div>
+          <div class="text-gray-700">Steven Jobs</div>
         </td>
         <td class="px-6 py-4">
             Active
@@ -42,7 +45,7 @@
         <td class="px-6 py-4">
           <div class="flex justify-end gap-4">
             <a x-data="{ tooltip: 'Delete' }" href="#"
-                class="text-red-600 hover:text-red-800"
+              class="text-red-600 hover:text-red-800"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -60,8 +63,17 @@
                 />
               </svg>
             </a>
-            <a x-data="{ tooltip: 'Edite' }" href="#"
-            class="text-blue-600 hover:text-blue-800">
+            <button
+              x-data="{ tooltip: 'Edite' }"
+              (click)="
+                openModal('Editar', {
+                  nombre: 'Steven Jobs',
+                  direccion: 'San Borja - Miraflores',
+                  telefono: '123456789'
+                })
+              "
+              class="text-blue-600 hover:text-blue-800"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -77,7 +89,7 @@
                   d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
                 />
               </svg>
-            </a>
+            </button>
           </div>
         </td>
       </tr>

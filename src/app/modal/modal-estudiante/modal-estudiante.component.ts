@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component,EventEmitter, Input, Output } from '@angular/core';
 import { EstudianteCreate } from '../../business/models/estudiante-crear';
 import { Estudiante } from '../../business/models/estudiante';
 import { ApiEstudianteService } from '../../shared/services/api-estudiante/api-estudiante.service';
@@ -17,30 +17,39 @@ export class ModalEstudianteComponent {
   @Input() item: EstudianteCreate = { nombre: '', direccion: '', telefono: '' };
   @Input() estudiante: Estudiante | null = null;
 
+  @Output() closeModal = new EventEmitter()
+  
   constructor(private estudianteService: ApiEstudianteService) {}
 
   close() {
     this.isVisible = false;
+    this.closeModal.emit(false)
   }
 
   confirmAction() {
-    if (this.actionType === 'añadir') {
+    if (this.actionType.toLocaleLowerCase() === 'añadir') {
       this.addEstudiante();
-    } else if (this.actionType === 'editar') {
+    } else if (this.actionType.toLocaleLowerCase() === 'editar') {
       this.updateEstudiante();
     }
   }
 
   addEstudiante() {
-    this.estudianteService.createEstudiante(this.item).subscribe({
-      next: (estudiante) => {
-        console.log('Estudiante añadido:', estudiante);
+    console.log(this.item);
+
+    setTimeout(() => {
         this.close();
-      },
-      error: (error) => {
-        console.error('Error al añadir estudiante:', error);
-      }
-    });
+    }, 2000);
+
+    // this.estudianteService.createEstudiante(this.item).subscribe({
+    //   next: (estudiante) => {
+    //     console.log('Estudiante añadido:', estudiante);
+    //     this.close();
+    //   },
+    //   error: (error) => {
+    //     console.error('Error al añadir estudiante:', error);
+    //   }
+    // });
   }
 
   updateEstudiante() {

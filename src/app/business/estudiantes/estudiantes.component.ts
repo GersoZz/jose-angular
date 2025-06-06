@@ -3,10 +3,11 @@ import { ApiEstudianteService } from '../../shared/services/api-estudiante/api-e
 import { EstudianteCreate } from '../models/estudiante-crear';
 import { Estudiante } from '../models/estudiante';
 import { ModalEstudianteComponent } from '../../modal/modal-estudiante/modal-estudiante.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-estudiantes',
-  imports: [ModalEstudianteComponent],
+  imports: [ModalEstudianteComponent, CommonModule],
   templateUrl: './estudiantes.component.html',
   styleUrl: './estudiantes.component.css'
 })
@@ -21,8 +22,8 @@ export class EstudiantesComponent {
     this.currentItem = item;
   }
 
-  closeModal(){
-    this.isModalVisible = false;
+  closeModal( isVisible:boolean = false){
+    this.isModalVisible = isVisible;
     this.actionType = '';
     this.currentItem = {};
   }
